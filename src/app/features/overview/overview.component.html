@@ -1,0 +1,157 @@
+<div class="overview-container">
+  <div class="table-header-actions">
+    <button class="add-btn" type="button" (click)="openAddDialog()">
+      <lucide-icon [name]="Plus" [size]="18"></lucide-icon>
+      Dodaj študenta
+    </button>
+  </div>
+
+  <div class="table-wrapper">
+    <p-table 
+      [value]="students()" 
+      [paginator]="true"
+      [rows]="20"
+      styleClass="custom-table"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 70px">ID</th>
+          <th style="width: 140px">Ime</th>
+          <th style="width: 160px">Priimek</th>
+          <th style="width: 210px">Email</th>
+          <th style="width: 110px">Leto vpisa</th>
+          <th>Predmeti</th>
+          <th style="width: 96px"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-student>
+        <tr>
+          <td class="id-cell">{{ student.id }}</td>
+          <td class="truncate-cell">{{ student.firstName }}</td>
+          <td class="truncate-cell">{{ student.lastName }}</td>
+          <td class="truncate-cell">{{ student.email }}</td>
+          <td class="year-cell">{{ student.enrollmentYear }}</td>
+          <td class="truncate-cell">
+            <div class="courses">
+              @for (course of student.courses; track course) {
+                <span class="course-badge">{{ course }}</span>
+              }
+            </div>
+          </td>
+          <td>
+            <div class="row-actions">
+              <button class="icon-btn" type="button" (click)="openEditCoursesDialog(student)" aria-label="Uredi predmete">
+                <lucide-icon [name]="Pencil" [size]="16"></lucide-icon>
+              </button>
+              <button class="icon-btn" type="button" (click)="confirmDelete(student)" aria-label="Izbriši študenta">
+                <lucide-icon [name]="Trash2" [size]="16"></lucide-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-dialog 
+    header="Dodaj novega študenta" 
+    [visible]="showAddDialog()" 
+    (onHide)="showAddDialog.set(false)"
+    [modal]="true" 
+    [style]="{ width: '620px', maxWidth: '95vw' }" 
+    [breakpoints]="{ '960px': '95vw', '640px': '98vw' }"
+    draggable="false" 
+    resizable="false"
+    [closable]="false"
+    class="custom-dialog">
+    <form [formGroup]="studentForm" class="form-grid">
+      <label class="field">
+        <span>Ime</span>
+        <input pInputText id="firstName" formControlName="firstName" placeholder="Vnesite ime" />
+      </label>
+      <label class="field">
+        <span>Priimek</span>
+        <input pInputText id="lastName" formControlName="lastName" placeholder="Vnesite priimek" />
+      </label>
+      <label class="field">
+        <span>Email</span>
+        <input pInputText id="email" formControlName="email" placeholder="primer@email.com" />
+        @if (studentForm.get('email')?.invalid && studentForm.get('email')?.touched) {
+          <small class="p-error">Vnesite veljaven email.</small>
+        }
+      </label>
+      <label class="field">
+        <span>Leto vpisa</span>
+        <p-inputNumber id="enrollmentYear" formControlName="enrollmentYear" [useGrouping]="false" />
+      </label>
+      <label class="field">
+        <span>Predmeti</span>
+        <p-listbox
+          id="courses"
+          [options]="courseOptions"
+          formControlName="courses"
+          optionLabel="label"
+          optionValue="value"
+          [multiple]="true"
+          [checkbox]="true"
+          [showToggleAll]="false"
+          [listStyle]="{ maxHeight: '260px' }"
+        ></p-listbox>
+      </label>
+    </form>
+    <ng-template pTemplate="footer">
+      <p-button label="Prekliči" (onClick)="showAddDialog.set(false)" severity="secondary" [text]="true"></p-button>
+      <p-button label="Shrani študenta" (onClick)="saveNewStudent()" [disabled]="studentForm.invalid" class="save-btn"></p-button>
+    </ng-template>
+  </p-dialog>
+
+  <p-dialog 
+    header="Uredi" 
+    [visible]="showEditCoursesDialog()" 
+    (onHide)="closeEditCoursesDialog()"
+    [modal]="true" 
+    [style]="{ width: '620px', maxWidth: '95vw' }" 
+    [breakpoints]="{ '960px': '95vw', '640px': '98vw' }"
+    draggable="false" 
+    resizable="false"
+    [closable]="false"
+    class="custom-dialog">
+    <form [formGroup]="coursesForm" class="form-grid">
+      <label class="field">
+        <span>Ime</span>
+        <input pInputText [value]="selectedStudent?.firstName" disabled />
+      </label>
+      <label class="field">
+        <span>Priimek</span>
+        <input pInputText [value]="selectedStudent?.lastName" disabled />
+      </label>
+      <label class="field">
+        <span>Email</span>
+        <input pInputText [value]="selectedStudent?.email" disabled />
+      </label>
+      <label class="field">
+        <span>Leto vpisa</span>
+        <input pInputText [value]="selectedStudent?.enrollmentYear" disabled />
+      </label>
+      <label class="field">
+        <span>Seznam predmetov</span>
+        <p-listbox
+          id="editCourses"
+          [options]="courseOptions"
+          formControlName="courses"
+          optionLabel="label"
+          optionValue="value"
+          [multiple]="true"
+          [checkbox]="true"
+          [showToggleAll]="false"
+          [listStyle]="{ maxHeight: '260px' }"
+        ></p-listbox>
+      </label>
+    </form>
+    <ng-template pTemplate="footer">
+      <p-button label="Prekliči" (onClick)="showEditCoursesDialog.set(false)" severity="secondary" [text]="true"></p-button>
+      <p-button label="Posodobi predmete" (onClick)="saveCourses()" [disabled]="coursesForm.invalid" class="save-btn"></p-button>
+    </ng-template>
+  </p-dialog>
+</div>
+

@@ -1,0 +1,146 @@
+.overview-container {
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.table-header-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.add-btn {
+  background-color: #6b5b6d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.add-btn:hover {
+  background-color: #5a4a5c;
+}
+
+.custom-table ::ng-deep .p-datatable-thead > tr > th {
+  background: #6b5b6d;
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 8px 10px;
+}
+
+.custom-table ::ng-deep .p-datatable-tbody > tr > td {
+  border: none;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+}
+
+.table-wrapper {
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  padding: 8px;
+}
+
+.id-cell {
+  color: #64748b;
+}
+
+.year-cell {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.truncate-cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.courses {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.course-badge {
+  background-color: #7a6a7c;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.row-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: #475569;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  color: #6b5b6d;
+}
+
+.custom-dialog ::ng-deep .p-dialog-header {
+  background: #6b5b6d;
+  color: white;
+}
+
+.custom-dialog ::ng-deep .p-dialog {
+  border: none;
+  border-radius: 10px;
+}
+
+.custom-dialog ::ng-deep .p-dialog-content {
+  padding-top: 0.5rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.field input,
+.field ::ng-deep .p-inputnumber-input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.95rem;
+}
+
+.p-error {
+  color: #ef4444;
+  font-size: 0.8rem;
+}
+
+.custom-dialog ::ng-deep .save-btn button {
+  background-color: #6b5b6d;
+  border-color: #6b5b6d;
+}
+
